@@ -1,0 +1,5 @@
+
+{
+  "name": "Gestor de Notas Escolares",
+  "description": "Um aplicativo web para gestão de notas escolares com autenticação, gerenciamento de turmas, alunos, notas e geração de relatórios em PDF."
+}
