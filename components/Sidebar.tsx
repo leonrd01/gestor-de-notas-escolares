@@ -11,7 +11,12 @@ const NavIcon: React.FC<{ path: string }> = ({ path }) => (
     </svg>
 );
 
-const Sidebar: React.FC = () => {
+type SidebarProps = {
+    isOpen: boolean;
+    onClose: () => void;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const { addToast } = useToast();
 
     const handleLogout = async () => {
@@ -28,25 +33,56 @@ const Sidebar: React.FC = () => {
     const activeNavLinkClasses = "bg-indigo-600 text-white";
 
     return (
-        <div className="w-64 h-full bg-gray-800 text-white flex flex-col fixed">
-            <div className="flex items-center justify-center h-20 border-b border-gray-700">
+        <div
+            className={`w-64 h-full bg-gray-800 text-white flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ${
+                isOpen ? 'translate-x-0' : '-translate-x-full'
+            } md:translate-x-0 md:static`}
+        >
+            <div className="flex items-center justify-between h-20 px-4 border-b border-gray-700">
+                <div className="flex items-center">
                 <NavIcon path="M12 6.253v11.494m-9-5.747h18" />
                 <h1 className="text-2xl font-bold">Gestor Escolar</h1>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="md:hidden p-2 text-gray-300 hover:text-white"
+                    aria-label="Fechar menu"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
             <nav className="flex-1 p-4 space-y-2">
-                <NavLink to="/turmas" className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}>
+                <NavLink
+                    to="/turmas"
+                    onClick={onClose}
+                    className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                >
                     <NavIcon path="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.001 3.001 0 015.658 0M9 9a3 3 0 116 0 3 3 0 01-6 0z" />
                     Turmas
                 </NavLink>
-                <NavLink to="/alunos" className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}>
+                <NavLink
+                    to="/alunos"
+                    onClick={onClose}
+                    className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                >
                     <NavIcon path="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     Alunos
                 </NavLink>
-                <NavLink to="/notas" className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}>
+                <NavLink
+                    to="/notas"
+                    onClick={onClose}
+                    className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                >
                     <NavIcon path="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                     Lançar Notas
                 </NavLink>
-                 <NavLink to="/relatorio" className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}>
+                 <NavLink
+                    to="/relatorio"
+                    onClick={onClose}
+                    className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                >
                     <NavIcon path="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     Relatório
                 </NavLink>
